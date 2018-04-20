@@ -1,6 +1,6 @@
 {
-  "name": "proxyServer",
-  "version": "1.0.0",
+  "name": "proxyserver",
+  "version": "0.1.0",
   "description": "proxy local api",
   "main": "index.js",
   "scripts": {
