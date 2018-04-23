@@ -39,6 +39,7 @@ config大致划分为三类配置：proxyBaseConf（代理相关配置）、prox
 |---|---|---|---|
 | mockPath | String | 代理规则文件或目录 | 规则 |
 | domain | String or Array | 代理规则主机名 | 默认只要路由符合规则就拦截 |
+| mockRule | Function | 解析mock文件函数 | 参数为遍历mockdir生成的对象列表，返回一个函数，该函数入参为请求 |
 | formte | Function | 对mock处理，如添加code、msg等 | 默认直接返回mock数据，只有在符合被处理情况才调用此方法 |
 | responseHandler | Function | 处理mock，在一些场景下我们也希望返回原响应，参数为res，mock，req | 返回true或false，只有在符合被处理情况才调用此方法 |
 
@@ -52,7 +53,7 @@ config大致划分为三类配置：proxyBaseConf（代理相关配置）、prox
 
 ## todo
 - [x] 基本流程，支持配置读取及mock热加载
-- [ ] rule通用配置
+- [x] rule通用配置
 - [ ] cli工具
 - [x] shell修改系统代理
 - [ ] 提供node api
