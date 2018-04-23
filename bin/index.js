@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const Version = require('../package.json').version;
 const program = require('commander');
-const Exec = require('./exector.js')
+const Exec = require('./exector.js');
 
 // 基础 -V -H --version -help
   // proxy -V
@@ -45,24 +45,25 @@ function getOpts (cmd) {
 function getPath (p) {
   return path.join(process.cwd(), p)
 }
-// set current dir proxy.config.js if it exist
-program
-  .command('set')
-  .description('set current dir proxy.config.js if it exist')
-  .option('-G, --global', 'set default config')
-  .option('-F, --filepath <configFilePath>', 'set config by path')
-  .action(cmd => {
-    console.log(getOpts(cmd))
-  })
-// show current dir proxy.config.js if it exist
-program
-  .command('ls')
-  .description('show current dir proxy.config.js if it exist')
-  .option('-G, --global', 'show global config')
-  .option('-F, --filepath <configFilePath>', 'show config by path')
-  .action(cmd => {
-    console.log(getOpts(cmd))
-  })
+// todo add command
+// // set current dir proxy.config.js if it exist
+// program
+//   .command('set')
+//   .description('set current dir proxy.config.js if it exist')
+//   .option('-G, --global', 'set default config')
+//   .option('-F, --filepath <configFilePath>', 'set config by path')
+//   .action(cmd => {
+//     console.log(getOpts(cmd))
+//   })
+// // show current dir proxy.config.js if it exist
+// program
+//   .command('ls')
+//   .description('show current dir proxy.config.js if it exist')
+//   .option('-G, --global', 'show global config')
+//   .option('-F, --filepath <configFilePath>', 'show config by path')
+//   .action(cmd => {
+//     console.log(getOpts(cmd))
+//   })
 
 program.parse(process.argv)
 

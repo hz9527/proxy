@@ -11,7 +11,7 @@ module.exports = {
       }
     ])
   },
-  commomPrompt (opts) { // 
+  commomPrompt (opts) {
     return inquirer.prompt(opts)
   }
 }

@@ -2,7 +2,7 @@
   "name": "proxyserver",
   "version": "0.1.0",
   "description": "proxy local api",
-  "main": "index.js",
+  "main": "lib/main.js",
   "bin": {
     "proxy": "bin/index.js"
   },

@@ -8,6 +8,8 @@ if [ $1 == 'on' ];then
     sudo networksetup -setwebproxy $NWS $2 $3
     sudo networksetup -setsecurewebproxy $NWS $2 $3
   fi
+  # 将自动代理配置.pac地址替换为空，当此项为on时且地址不为空，代理无效，暂时先不管吧
+  # sudo networksetup -setautoproxyurl $NWS ''
   sudo networksetup -setwebproxystate $NWS on
   sudo networksetup -setsecurewebproxystate $NWS on
 else

@@ -7,6 +7,28 @@ const { getOptions, getChildOpts } = require('../lib/utils/exectorUtils.js');
 const RULE_KEY = 'proxyRuleConf';
 const PATH_KEY = 'mockPath';
 
+// common
+function getConfigFile (args) { // {dir, path}
+  return new Promise((resolve, reject) => {
+    let configPath = args.path || Utils.getCusConfPath();
+    let config = null;
+    let mockDir = args.dir;
+    if (!Utils.isVaildPath(configPath)) {
+      if ('path' in args) reject({ code: 2, msg: `config file path(${args.path}) is inexistence` });
+      configPath = null;
+    }
+    if (configPath) config = require(configPath);
+    if (config) {
+      if (mockDir) {
+        config = mergeDir(config, mockDir);
+      } else {
+        config = Utils.transMockPath(configPath, config);
+      }
+    }
+    resolve(config);
+  })
+}
+
 // exec
 function mergeDir (config, dir) {
   config.constructor !== Object && (config = {});
@@ -20,7 +42,7 @@ function mergeDir (config, dir) {
 
 function cyclicPrompt (answer, opts) {
   let cur = answer ? getChildOpts(answer, opts) : opts;
-  if (cur.constructor === Object) return cur;
+  if (cur.constructor === Object) return Utils.transMockPath(process.cwd(), cur)
   return Inquirer.commomPrompt(cur)
     .then((ans) => cyclicPrompt(ans, cur))
 }
@@ -33,18 +55,7 @@ function getConf (args) {
   ).then(res => {
     if (res === true || res.confirmStart === true) {
       // 获取配置
-      return new Promise((resolve, reject) => {
-        let configPath = args.path || Utils.getCurConfig();
-        let config = null;
-        let mockDir = args.dir;
-        if (!Utils.isVaildPath(configPath)) {
-          if ('path' in args) reject({ code: 2, msg: `config file path(${args.path}) is inexistence`});
-          configPath = null;
-        }
-        if (configPath) config = require(configPath);
-        if (mockDir && config) config = mergeDir(config, mockDir);
-        resolve(config);
-      })
+      return getConfigFile(args)
     } else {
       // 编辑配置
       return cyclicPrompt(null, getOptions())
@@ -77,10 +88,10 @@ module.exports = {
         console.log(msg.msg || msg);
       })
   },
-  exec_set (args) {
+  exec_set(args) { // {global, filepath}
 
   },
-  exec_ls (args) {
+  exec_ls(args) { // {global, filepath}
 
   }
 }
