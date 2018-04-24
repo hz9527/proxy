@@ -20,7 +20,7 @@ function getConfigFile (args) { // {dir, path}
     if (configPath) config = require(configPath);
     if (config) {
       if (mockDir) {
-        config = mergeDir(config, mockDir);
+        config = Utils.mergeMockPath(config, mockDir);
       } else {
         config = Utils.transMockPath(configPath, config);
       }
@@ -30,16 +30,6 @@ function getConfigFile (args) { // {dir, path}
 }
 
 // exec
-function mergeDir (config, dir) {
-  config.constructor !== Object && (config = {});
-  if (RULE_KEY in config) {
-    config[PATH_KEY] = dir;
-  } else {
-    config[RULE_KEY] = {[PATH_KEY]: dir};
-  }
-  return config
-}
-
 function cyclicPrompt (answer, opts) {
   let cur = answer ? getChildOpts(answer, opts) : opts;
   if (cur.constructor === Object) return Utils.transMockPath(process.cwd(), cur)
