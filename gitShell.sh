@@ -25,6 +25,6 @@ if [ $1 == "push" ];then
   git commit -m $2
   git pull origin master
   if [ $? == 0 ];then
-    git push origin
+    git push origin master
   fi
 fi
